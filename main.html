@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>For Prasanna Abinaya ❤️</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <style>
+    :root {
+      --bg1: #ffc1da;
+      --bg2: #ff99c8;
+      --card: #fff0f6;
+      --accent: #ff3b7a;
+      --accent-2: #ff6aa6;
+      --text-muted: #5b2a3b;
+      --shadow: 0 18px 50px rgba(115,40,62,0.08);
+      --card-min: 380px;
+      --card-max: 780px;
+      --h1-size: clamp(26px, 4.2vmin, 44px);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      margin: 0;
+      min-height: 100svh;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      color: #fff;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* --- FIRST PART: THE INTERACTIVE CARD --- */
+    #valentineCard {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      background: radial-gradient(900px circle at 10% 10%, rgba(255, 90, 160, 0.28), transparent 12%),
+                  linear-gradient(180deg, var(--bg2), var(--bg1));
+      transition: opacity 0.8s ease, visibility 0.8s;
+    }
+
+    .card {
+      width: clamp(var(--card-min), 60vw, var(--card-max));
+      padding: 30px 25px;
+      background: var(--card);
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      color: var(--text-muted);
+    }
+
+    .art { width: 180px; margin-bottom: 10px; border-radius: 15px; }
+
+    h1.playfair {
+      font-family: "Playfair Display", serif;
+      font-size: var(--h1-size);
+      margin-bottom: 15px;
+    }
+
+    .button-zone {
+      position: relative;
+      height: 160px;
+      margin-top: 20px;
+      touch-action: none;
+    }
+
+    .btn-main {
+      position: absolute;
+      padding: 12px 28px;
+      font-size: 18px;
+      font-weight: 800;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.1s ease;
+    }
+
+    #yesBtn {
+      left: 15%; top: 50%; transform: translateY(-50%);
+      background: linear-gradient(180deg, var(--accent), var(--accent-2));
+      color: white;
+    }
+
+    #noBtn {
+      left: 60%; top: 50%; transform: translateY(-50%);
+      background: #efe6ea; color: #5b2a3b;
+    }
+
+    /* --- SECOND PART: THE STORY EXPERIENCE --- */
+    #storyExperience {
+      display: none;
+      width: 100vw;
+      height: 100vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    }
+
+    .page {
+      display: none;
+      min-height: 100vh;
+      width: 100vw;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 30px;
+      animation: fade 0.8s ease forwards;
+    }
+
+    .active { display: flex; }
+    
+    .scrollable-page {
+      display: none;
+      min-height: 100vh;
+      width: 100vw;
+      flex-direction: column;
+      align-items: center;
+      padding: 60px 20px;
+      overflow-y: auto;
+    }
+    .scrollable-page.active { display: flex; }
+
+    h1.dancing { font-family: 'Dancing Script', cursive; font-size: 3.5rem; margin-bottom: 15px; color: white; }
+    p.story-text { max-width: 800px; line-height: 1.8; font-size: 18px; white-space: pre-line; color: white; }
+
+    .nav-btn {
+      padding: 12px 30px;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      cursor: pointer;
+      background: #fff;
+      color: #ff4b6e;
+      font-weight: 600;
+      margin-top: 30px;
+      transition: 0.3s;
+      flex-shrink: 0;
+    }
+    .nav-btn:hover { transform: scale(1.1); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+
+    /* Floating Hearts */
+    .heart {
+      position: fixed; bottom: -20px; font-size: 22px;
+      animation: floatUp linear infinite; pointer-events: none; z-index: 50;
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(0) scale(.8); }
+      to { transform: translateY(-110vh) scale(1.4); opacity: 0; }
+    }
+
+    @keyframes fade {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Gifts & Blocks */
+    .gift-container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 20px;}
+    .gift {
+      width: 120px; height: 120px; background: #fff; color: #ff4b6e;
+      display: flex; justify-content: center; align-items: center;
+      border-radius: 20px; font-weight: bold; cursor: pointer; transition: 0.3s;
+    }
+    .gift:hover { transform: translateY(-10px); background: #ffeef2; }
+
+    /* REDESIGNED BLOCKS FOR GIFT 2 */
+    .blocks { 
+      display: flex; 
+      flex-wrap: wrap; 
+      gap: 20px; 
+      justify-content: center; 
+      max-width: 1100px; 
+      margin-top: 30px;
+    }
+    .block {
+      background: rgba(255,255,255,0.95);
+      color: #ff4b6e; 
+      border-radius: 20px; 
+      display: flex;
+      justify-content: center; 
+      align-items: center; 
+      font-size: 16px; 
+      padding: 25px;
+      width: calc(45% - 20px);
+      min-width: 300px;
+      min-height: 120px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      line-height: 1.6;
+      font-weight: 500;
+    }
+
+    /* Popups */
+    .warning-popup {
+      position: fixed; left: 50%; top: 20%; transform: translateX(-50%);
+      background: white; color: #7b1f3a; padding: 20px; border-radius: 15px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2); display: none; z-index: 3000;
+      text-align: center;
+    }
+    .warning-popup.show { display: block; animation: pop 0.3s ease; }
+    
+    @keyframes pop { from { transform: translateX(-50%) scale(0.8); } to { transform: translateX(-50%) scale(1); } }
+  </style>
+</head>
+
+<body>
+  <canvas id="confettiCanvas" style="position:fixed; inset:0; pointer-events:none; z-index:9999;"></canvas>
+
+  <section id="valentineCard">
+    <div class="card">
+      <img src="john.jpeg" style="width:250px; border-radius:20px; margin-top:20px;" alt="Our Photo">
+      <h1 class="playfair">Hey, will you be my valentine?</h1>
+      <div class="button-zone" id="zone">
+        <button id="yesBtn" class="btn-main">Yes</button>
+        <button id="noBtn" class="btn-main">No</button>
+      </div>
+      <div style="margin-top:15px; font-size:14px; opacity:0.8;">Don't be difficult—just say 'Yes.' 😸</div>
+    </div>
+  </section>
+
+  <div class="warning-popup" id="warningPopup">
+    <strong>Wait! 🛑</strong>
+    <p style="color: #555; margin: 10px 0;">Are you sure? This isn't quite right — try again!</p>
+    <button onclick="closeWarning()" style="padding: 8px 15px; border-radius: 8px; border:none; background:#ff3b7a; color:white; cursor:pointer;">Got it</button>
+  </div>
+
+  <main id="storyExperience">
+    <div class="page" id="page0">
+      <h1 class="dancing">Hey Prasanna Abinaya ❤️ <br>From your John<br></h1>
+      <p class="story-text">Click below to open something made only for you…</p>
+      <<img src="teddy1.gif" style="width:250px; border-radius:20px; margin-top:20px;" alt="My Gif">
+      <button class="nav-btn" onclick="nextPage(1)">Open 💌</button>
+    </div>
+
+    <div class="page" id="page1">
+      <h1 class="dancing">Some Feelings Begin Silently…</h1>
+      <p class="story-text">Not every story starts with love… 
+        some begin with a simple hello, 
+        and slowly become the most special part of life.</p>
+      <button class="nav-btn" onclick="nextPage(2)">Next</button>
+    </div>
+
+    <div class="page" id="page2">
+      <h1 class="dancing">You Are Special</h1>
+      <p class="story-text">Your smile brings calm… 
+        your voice brings comfort… 
+        and your presence turns ordinary moments 
+        into beautiful memories.</p>
+      <button class="nav-btn" onclick="nextPage(3)">Next</button>
+    </div>
+
+    <div class="page" id="page3">
+      <h1 class="dancing">My Silent One-Side Love</h1>
+      <p class="story-text">I never asked for anything in return… 
+        because loving you quietly 
+        is already enough for my heart.</p>
+      <button class="nav-btn" onclick="nextPage(4)">Open Gifts 🎁</button>
+    </div>
+
+    <div class="page" id="page4">
+      <h1 class="dancing">Three Little Gifts 🎁</h1>
+      <div class="gift-container">
+        <div class="gift" onclick="nextPage(41)">Gift 1</div>
+        <div class="gift" onclick="nextPage(42)">Gift 2</div>
+        <div class="gift" onclick="nextPage(43)">Gift 3</div>
+      </div>
+    </div>
+
+    <div class="page" id="page41">
+      <h1 class="dancing">I Sang This For You 🎶</h1>
+      <audio controls><source src="song.ogg" type="audio/ogg"></audio>
+      <button class="nav-btn" onclick="nextPage(4)">Back to Gifts</button>
+    </div>
+
+    <div class="scrollable-page" id="page42">
+      <h1 class="dancing">Little Moments makes unforgettable</h1>
+      <div class="blocks">
+        <div class="block">4 th September is the first messaage from you</div>
+        <div class="block">13 th may is my first call ,i talk to you</div>
+        <div class="block">first selfie with her on Manisha mrg but its a group photo</div>
+        <div class="block">28 th august our first private meet to discuss the problem statement along with her in class ,you in yellow dress</div>
+        <div class="block">7 th oct evening First eat waffle together in canteen</div>
+        <div class="block">on 10 th October i proposed her.... based on a reel but i tell her its an dare ,but its from my heart.... but she also tells love you to drlg ❤️</div>
+        <div class="block">7 th October you sing me a first song for me</div>
+        <div class="block">23 october first date togetther in car</div>
+        <div class="block">First big fight on 7 th November ,you tell me enna vitu poidu on angry</div>
+        <div class="block">30 th October the first first ever thing she bought me dairymilk silk</div>
+      </div>
+      <button class="nav-btn" onclick="nextPage(4)">Back to Gifts</button>
+    </div>
+
+    <div class="scrollable-page" id="page43">
+      <h1 class="dancing">My Memories With You ❤️</h1>
+      <p class="story-text">
+        From our very first message… to every call, smile, fight, care, gift, journey, and silent moment…
+all of it slowly became the most emotional and unforgettable part of my life.
+
+I searched gifts without even knowing what you liked…
+waited just to see you…
+felt happiness in the smallest things you did…
+and sometimes felt pain you never even noticed.
+
+There were bus rides, shared food, long talks, late‑night conversations,
+silly fights, apologies, laughter, tears, and memories that will stay with me forever.
+
+You may see me only as a friend… and I truly respect that with all my heart.
+I am sorry for every moment I hurt you knowingly or unknowingly.
+
+But one truth will never change —
+my care for you is real,
+my respect for you is pure,
+and somewhere deep in my heart…
+you will always remain the most beautiful feeling of my life.
+      </p>
+      <button class="nav-btn" onclick="nextPage(5)">Next</button>
+    </div>
+
+    <div class="page" id="page5">
+      <h1 class="dancing">My Wish For You 🌸</h1>
+      <p class="story-text">Wherever life takes you… 
+        I pray you stay happy, peaceful, and smiling.</p>
+      <button class="nav-btn" onclick="nextPage(6)">Final</button>
+    </div>
+
+    <div class="page" id="page6">
+      <h1 class="dancing">Always Your Well-Wisher ❤️</h1>
+      <p class="story-text">Even if time changes everything… 
+        my respect and care for you 
+        will never change.
+      and 
+      I will always there for you ❤️
+      </p>
+    </div>
+  </main>
+
+  <script>
+    const valentineCard = document.getElementById("valentineCard");
+    const storyExperience = document.getElementById("storyExperience");
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const zone = document.getElementById("zone");
+    const warningPopup = document.getElementById("warningPopup");
+
+    // --- Floating Hearts Logic ---
+    const heartIcons = ['💗','💖','💘','💝','❤️','🧡','💜'];
+    setInterval(() => {
+      if (storyExperience.style.display === "block") {
+        const h = document.createElement('div');
+        h.className = 'heart';
+        h.innerText = heartIcons[Math.floor(Math.random()*heartIcons.length)];
+        h.style.left = Math.random()*100 + 'vw';
+        h.style.animationDuration = (4 + Math.random()*4) + 's';
+        document.body.appendChild(h);
+        setTimeout(() => h.remove(), 8000);
+      }
+    }, 400);
+
+    // --- No Button Running Away ---
+    let yesScale = 1;
+    zone.addEventListener("pointermove", (e) => {
+      const b = noBtn.getBoundingClientRect();
+      const dist = Math.hypot(b.left + b.width/2 - e.clientX, b.top + b.height/2 - e.clientY);
+      
+      if (dist < 120) {
+        const z = zone.getBoundingClientRect();
+        let newX = Math.random() * (z.width - b.width);
+        let newY = Math.random() * (z.height - b.height);
+        noBtn.style.left = newX + "px";
+        noBtn.style.top = newY + "px";
+        
+        // Grow the Yes button
+        yesScale = Math.min(3, yesScale + 0.1);
+        yesBtn.style.transform = `translateY(-50%) scale(${yesScale})`;
+      }
+    });
+
+    noBtn.addEventListener("click", () => {
+      warningPopup.classList.add("show");
+    });
+
+    function closeWarning() {
+      warningPopup.classList.remove("show");
+    }
+
+    // --- The Big Transition ---
+    yesBtn.addEventListener("click", () => {
+      confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+      valentineCard.style.opacity = "0";
+      setTimeout(() => {
+        valentineCard.style.display = "none";
+        storyExperience.style.display = "block";
+        nextPage(0);
+      }, 800);
+    });
+
+    // --- Navigation ---
+    function nextPage(n) {
+      document.querySelectorAll('.page, .scrollable-page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page' + n).classList.add('active');
+      storyExperience.scrollTo(0,0);
+    }
+  </script>
+</body>
+</html>
